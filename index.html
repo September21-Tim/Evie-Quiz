@@ -89,12 +89,12 @@ body{background:linear-gradient(135deg,#008B8B 0%,#00AEAE 50%,#48D1CC 100%);min-
   </div>
   <div class="bg-slate-50 rounded-2xl p-3 sm:p-4 border border-slate-200 mb-6 shadow-inner">
     <div class="flex items-center justify-between text-xs font-bold text-slate-400 px-3 pb-2 border-b border-slate-200">
-      <span class="w-12">&#21517;&#27425;</span><span class="flex-1 text-left">&#29609;&#23478;&#26289;&#31281;</span><span class="w-16 text-center">&#31572;&#23565;&#38988;&#25976;</span><span class="w-16 text-right">&#26178;&#38291;</span>
+      <span class="w-12">&#21517;&#27425;</span><span class="flex-1 text-left">&#29609;&#23478;&#26289;&#31281;</span><span class="w-20 text-right">&#31572;&#23565;&#38988;&#25976;</span>
     </div>
     <div id="leaderboardList" class="divide-y divide-slate-100 max-h-60 overflow-y-auto"></div>
   </div>
   <div class="flex flex-col sm:flex-row gap-3">
-    <button onclick="shareScore()" class="flex-1 py-3.5 px-4 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl shadow-md transition flex items-center justify-center gap-2 text-sm cursor-pointer"><span>&#20998;&#20139;&#25104;&#32318;</span></button>
+    <button id="refreshBtn" onclick="refreshScores()" class="flex-1 py-3.5 px-4 bg-tealMain hover:bg-tealDark disabled:opacity-60 text-white font-bold rounded-xl shadow-md transition flex items-center justify-center gap-2 text-sm cursor-pointer"><span>&#26356;&#26032;&#25104;&#32318;</span></button>
   </div>
 </section>
 </main>
@@ -329,29 +329,19 @@ async function renderLeaderboard() {
     row.append(
       mk('w-12 font-bold ' + (rankColor[idx] || 'text-slate-400'), medals[idx] || '#' + (idx + 1)),
       nameEl,
-      mk('w-16 text-center font-black text-tealMain font-fun', `${item.score} / 5`),
-      mk('w-16 text-right text-slate-400 text-[11px]', item.time)
+      mk('w-20 text-right font-black text-tealMain font-fun', `${item.score} / 5`)
     );
     box.appendChild(row);
   });
 }
 
-async function shareScore() {
-  const text = `\u6211\u5728\u300c5 True 5 Line - \u6e2c\u8a66\u770b\u770b\u4f60\u5c0d Evie \u7684\u89c0\u5bdf\u300d\u7b54\u5c0d\u4e86 ${lastScore} / 5 \u500b\u771f\u76f8\uff01\u4f60\u4e5f\u4f86\u8a66\u8a66\u770b \ud83d\udc49 ${location.href}`;
-  try {
-    if (navigator.share) { await navigator.share({ text }); return; }
-    await navigator.clipboard.writeText(text);
-    toast("\u6210\u7e3e\u5df2\u8907\u88fd\u5230\u526a\u8cbc\u7c3f\uff01");
-  } catch (e) {
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    document.body.appendChild(ta);
-    ta.select();
-    let ok = false;
-    try { ok = document.execCommand('copy'); } catch (err) {}
-    ta.remove();
-    toast(ok ? "\u6210\u7e3e\u5df2\u8907\u88fd\u5230\u526a\u8cbc\u7c3f\uff01" : "\u8907\u88fd\u5931\u6557\uff0c\u6b61\u8fce\u622a\u5716\u5206\u4eab\u4f60\u7684\u6210\u7e3e\uff01");
-  }
+async function refreshScores() {
+  const btn = $('refreshBtn'), label = btn.querySelector('span');
+  btn.disabled = true;
+  label.textContent = '\u66f4\u65b0\u4e2d...';
+  await renderLeaderboard();
+  label.textContent = '\u66f4\u65b0\u6210\u7e3e';
+  btn.disabled = false;
 }
 
 function restartGame() {
