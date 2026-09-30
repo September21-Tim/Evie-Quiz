@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5 True 5 Line - &#28204;&#35430;&#30475;&#30475;&#20320;&#23565; Evie &#30340;&#35264;&#23519;&#21543;&#65281;</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<script>
+tailwind.config = { theme: { extend: {
+  fontFamily: { sans: ['Noto Sans TC','sans-serif'], fun: ['Fredoka','Noto Sans TC','sans-serif'] },
+  colors: { tealMain:'#00AEAE', tealDark:'#008B8B', tealLight:'#E6F7F7', goldAccent:'#FFD700' }
+}}}
+</script>
+<style>
+body{background:linear-gradient(135deg,#008B8B 0%,#00AEAE 50%,#48D1CC 100%);min-height:100vh}
+@keyframes sparkleFloat{0%{transform:scale(.4) rotate(0);opacity:.2}100%{transform:scale(1.2) rotate(180deg);opacity:1}}
+@keyframes bounceSubtle{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.animate-bounce-subtle{animation:bounceSubtle 2s infinite}
+.card-selected{border:3px solid #00AEAE!important;background:linear-gradient(145deg,#fff,#E6F7F7)!important;box-shadow:0 10px 25px -5px rgba(0,174,174,.35),0 0 18px rgba(255,215,0,.5);transform:translateY(-2px)}
+.sparkle-star{position:absolute;pointer-events:none;color:#FFD700;filter:drop-shadow(0 0 4px rgba(255,215,0,.9));animation:sparkleFloat 1.2s ease-in-out infinite alternate}
+.page-step{transition:opacity .35s,transform .35s}
+.page-hidden{opacity:0;pointer-events:none;position:absolute;width:100%;transform:translateY(15px)}
+.page-active{opacity:1;pointer-events:auto;position:relative;transform:translateY(0)}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-thumb{background:rgba(0,174,174,.3);border-radius:8px}
+</style>
+</head>
+<body class="font-sans text-slate-800 flex flex-col items-center justify-center p-3 sm:p-6 min-h-screen">
+<main class="w-full max-w-2xl bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl border border-white/40 overflow-hidden relative my-auto">
+
+<section id="page1" class="page-step page-active p-6 sm:p-10 text-center flex flex-col items-center">
+  <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-tealLight text-tealDark font-bold text-xs sm:text-sm mb-4 border border-tealMain/20 animate-bounce-subtle">
+    <span>&#x2728;</span><span>Evie &#35264;&#23519;&#21147;&#22823;&#32771;&#39511;</span>
+  </div>
+  <h1 class="text-3xl sm:text-5xl font-black text-tealMain mb-3 tracking-tight font-fun">5 True 5 Line</h1>
+  <p class="text-slate-600 mb-8 text-sm sm:text-base max-w-md font-medium leading-relaxed">
+    &#35041;&#38754;&#26377; 10 &#20491;&#25551;&#36848;&#65292;&#30495;&#30456;&#21482;&#26377;5&#20491;&#65281;<br><span class="text-tealDark font-bold">&#28204;&#35430;&#30475;&#30475;&#20320;&#23565;Evie&#30340;&#35264;&#23519;&#21543;&#65281;</span>
+  </p>
+  <div class="w-full max-w-md bg-slate-50 p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-inner mb-6 text-left">
+    <label for="userNickname" class="block text-sm font-bold text-slate-700 mb-2">&#35531;&#36664;&#20837;&#24744;&#30340;&#26289;&#31281;&#65306;</label>
+    <input type="text" id="userNickname" maxlength="12" placeholder="&#20363;&#22914;&#65306;&#23567;&#26126; / Alex" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-tealMain text-slate-800 font-bold text-base sm:text-lg bg-white">
+    <div class="mt-3 flex items-start gap-2 text-xs text-amber-800 bg-amber-50 p-3 rounded-xl border border-amber-200/80">
+      <span class="shrink-0">&#x26A0;&#xFE0F;</span>
+      <span><strong>&#29305;&#21029;&#25552;&#37266;&#65306;</strong>&#26289;&#31281;&#36865;&#20986;&#24460;&#19981;&#33021;&#26356;&#25913;&#65281;&#35531;&#30906;&#23450;&#22635;&#23531;&#27491;&#30906;&#12290;</span>
+    </div>
+  </div>
+  <button onclick="handleNicknameSubmit()" class="w-full max-w-md py-4 px-6 bg-tealMain hover:bg-tealDark text-white font-bold text-lg rounded-2xl shadow-lg transition flex items-center justify-center gap-2 group cursor-pointer">
+    <span>&#38283;&#22987;&#28204;&#35430;</span>
+  </button>
+</section>
+
+<section id="page2" class="page-step page-hidden p-4 sm:p-8">
+  <div class="sticky top-0 z-20 bg-white/95 backdrop-blur-md pb-3 pt-2 mb-4 border-b border-slate-100 flex items-center justify-between">
+    <div class="flex items-center gap-2.5">
+      <div>
+        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Player</p>
+        <p id="displayName" class="text-sm font-extrabold leading-tight truncate max-w-[120px] sm:max-w-[180px]">&#29609;&#23478;&#26289;&#31281;</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2 bg-tealLight px-4 py-2 rounded-full border border-tealMain/30 shadow-sm">
+      <span class="text-xs font-bold text-slate-600">&#11088; &#24050;&#36984;&#21462;:</span>
+      <span id="selectCounter" class="text-base sm:text-lg font-black text-tealMain font-fun">0/5</span>
+    </div>
+  </div>
+  <p class="text-center text-xs sm:text-sm text-slate-500 mb-4 font-medium">&#35531;&#40670;&#36984;&#20320;&#35469;&#28858;&#26159; <strong class="text-tealMain">True (&#30495;&#30456;)</strong> &#30340; 5 &#20491;&#36984;&#38917;&#65306;</p>
+  <div id="optionsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6"></div>
+  <button id="submitAnswerBtn" onclick="submitAnswers()" disabled class="w-full py-3.5 px-6 rounded-2xl font-bold text-base sm:text-lg flex items-center justify-center gap-2 bg-slate-200 text-slate-400 cursor-not-allowed">
+    <span>&#36865;&#20986;&#31572;&#26696; (&#35531;&#36984;&#28415; 5 &#20491;)</span>
+  </button>
+</section>
+
+<section id="page3" class="page-step page-hidden p-4 sm:p-8">
+  <div class="text-center mb-5">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 text-amber-800 font-bold text-xs mb-2"><span>&#x1F3C6;</span><span>&#25490;&#34892;&#27036;&#33287;&#31572;&#38988;&#32000;&#37636;</span></div>
+    <h2 class="text-2xl sm:text-3xl font-black">&#22823;&#23478;&#23565; Evie &#30340;&#35264;&#23519;&#27036;</h2>
+  </div>
+  <div class="grid grid-cols-2 gap-3 mb-5">
+    <div class="bg-tealLight p-4 rounded-2xl border border-tealMain/20 text-center">
+      <p class="text-xs font-bold text-tealDark mb-1">&#32317;&#28204;&#35430;&#20154;&#25976;</p>
+      <p id="statTotalPlayers" class="text-2xl sm:text-3xl font-black text-tealMain font-fun">0 &#20154;</p>
+    </div>
+    <div class="bg-amber-50 p-4 rounded-2xl border border-amber-200 text-center">
+      <p class="text-xs font-bold text-amber-700 mb-1">&#24179;&#22343;&#31572;&#23565;&#38988;&#25976;</p>
+      <p id="statAvgScore" class="text-2xl sm:text-3xl font-black text-amber-600 font-fun">0.0 &#38988;</p>
+    </div>
+  </div>
+  <div class="bg-slate-50 rounded-2xl p-3 sm:p-4 border border-slate-200 mb-6 shadow-inner">
+    <div class="flex items-center justify-between text-xs font-bold text-slate-400 px-3 pb-2 border-b border-slate-200">
+      <span class="w-12">&#21517;&#27425;</span><span class="flex-1 text-left">&#29609;&#23478;&#26289;&#31281;</span><span class="w-16 text-center">&#31572;&#23565;&#38988;&#25976;</span><span class="w-16 text-right">&#26178;&#38291;</span>
+    </div>
+    <div id="leaderboardList" class="divide-y divide-slate-100 max-h-60 overflow-y-auto"></div>
+  </div>
+  <div class="flex flex-col sm:flex-row gap-3">
+    <button onclick="shareScore()" class="flex-1 py-3.5 px-4 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl shadow-md transition flex items-center justify-center gap-2 text-sm cursor-pointer"><span>&#20998;&#20139;&#25104;&#32318;</span></button>
+  </div>
+</section>
+</main>
+
+<div id="confirmModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+  <div class="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl scale-95 transition-transform duration-300 text-center" id="confirmModalCard">
+    <div class="w-12 h-12 bg-amber-100 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-3 text-xl">&#x26A0;&#xFE0F;</div>
+    <h3 class="text-lg font-bold mb-2">&#26289;&#31281;&#36865;&#20986;&#30906;&#35469;</h3>
+    <p class="text-sm text-slate-600 mb-6 font-medium">&#26289;&#31281;&#36865;&#20986;&#24460;&#19981;&#33021;&#26356;&#25913;&#65281;&#30906;&#23450;&#35201;&#20197;&#12302;<span id="confirmNameHolder" class="font-bold text-tealMain"></span>&#12303;&#38283;&#22987;&#36938;&#25138;&#21966;&#65311;</p>
+    <div class="flex gap-3">
+      <button onclick="closeConfirmModal()" class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-sm cursor-pointer">&#36820;&#22238;&#20462;&#25913;</button>
+      <button onclick="proceedToGamePage()" class="flex-1 py-2.5 bg-tealMain hover:bg-tealDark text-white font-bold rounded-xl shadow-md text-sm cursor-pointer">&#30906;&#23450;&#38283;&#22987;</button>
+    </div>
+  </div>
+</div>
+
+<div id="resultModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+  <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl scale-95 transition-transform duration-300 text-center relative overflow-hidden" id="resultModalCard">
+    <div class="absolute top-0 left-0 right-0 h-3 bg-gradient-to-r from-tealMain via-tealDark to-goldAccent"></div>
+    <div class="w-16 h-16 bg-gradient-to-tr from-tealMain to-tealDark text-white rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl shadow-lg animate-bounce">&#x1F3C6;</div>
+    <h3 class="text-2xl font-black mb-1">&#28204;&#35430;&#23436;&#25104;&#65281;</h3>
+    <p class="text-xs text-slate-400 mb-5 font-semibold">5 True 5 Line - &#28204;&#35430;&#30475;&#30475;&#20320;&#23565; Evie &#30340;&#35264;&#23519;&#21543;&#65281;</p>
+    <div class="bg-tealLight rounded-2xl p-5 border border-tealMain/30 mb-5">
+      <p class="text-base font-bold text-slate-700 mb-2">&#20320;&#22312;&#23565; Evie &#30340;&#35264;&#23519;&#20013;&#65292;&#31572;&#23565;&#20102; <span id="scoreNumber" class="text-3xl font-black text-tealMain font-fun mx-1">0</span> / 5 &#20491;&#30495;&#30456;&#65281;</p>
+      <p id="scoreComment" class="text-xs font-bold text-tealDark"></p>
+    </div>
+    <p class="text-[11px] text-slate-400 mb-6 bg-slate-50 p-2.5 rounded-lg border border-slate-200 leading-relaxed"><span class="mr-1">&#x1F512;</span> &#28858;&#32173;&#25345;&#36938;&#25138;&#27138;&#36259;&#65292;&#31995;&#32113;&#20445;&#35703;&#38577;&#23494;&#65306;&#19981;&#26371;&#20844;&#24067;&#20855;&#39636;&#21738;&#24190;&#38917;&#26159; True&#65281;</p>
+    <div class="flex flex-col gap-2.5">
+      <button onclick="goToLeaderboardPage()" class="w-full py-3.5 px-6 bg-tealMain hover:bg-tealDark text-white font-bold rounded-2xl shadow-lg transition flex items-center justify-center gap-2 text-base cursor-pointer"><span>&#30475;&#25490;&#34892;&#27036;</span></button>
+      <button onclick="restartGameFromModal()" class="w-full py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-xl transition flex items-center justify-center gap-2 text-sm cursor-pointer"><span>&#37325;&#26032;&#29609;</span></button>
+    </div>
+  </div>
+</div>
+
+<script>
+const OPTIONS = [
+  { id: 1, text: "\u53f0\u4e2d\u4eba" },
+  { id: 2, text: "\u8eab\u4e0a\u67093\u500b\u523a\u9752" },
+  { id: 3, text: "\u559c\u6b61\u5403\u828b\u982d" },
+  { id: 4, text: "\u53bb\u82f1\u570b\u6253\u5de5\u5ea6\u5047" },
+  { id: 5, text: "\u8c93\u6d3e" },
+  { id: 6, text: "GGR\u8eca\u4e3b" },
+  { id: 7, text: "\u7da0\u8272\u662f\u6211\u6700\u559c\u6b61\u7684\u984f\u8272" },
+  { id: 8, text: "\u6232\u5287\u7cfb\u7562\u696d" },
+  { id: 9, text: "\u52d5\u904e\u958b\u5200\u624b\u8853" },
+  { id: 10, text: "\u66fe\u7d93\u662f\u5ee3\u64ad\u4e3b\u6301\u4eba" }
+];
+const COMMENTS = [
+  "\u6c92\u95dc\u4fc2\uff01Evie \u7684\u7955\u5bc6\u592a\u6df1\u4e86\uff0c\u591a\u627e\u5979\u804a\u5929\u4ea4\u6d41\u5427\uff01\u2615",
+  "\u7b54\u5c0d 1 \u500b\uff0c\u7a0d\u5fae\u4e86\u89e3 Evie \u4e00\u4e9b\u4e9b\uff0c\u7e7c\u7e8c\u4fdd\u6301\uff01\ud83d\ude09",
+  "\u7b54\u5c0d 2 \u500b\uff0c\u9084\u4e0d\u932f\u5594\uff0c\u518d\u591a\u89c0\u5bdf\u5979\u4e00\u9ede\uff01\ud83d\ude42",
+  "\u7b54\u5c0d 3 \u500b\uff01\u4f60\u5c0d Evie \u5f88\u6709\u89c0\u5bdf\u529b\u5594\uff01\u2728",
+  "\u7b54\u5c0d 4 \u500b\uff01\u4f60\u4e00\u5b9a\u662f Evie \u7684\u5bc6\u5207\u597d\u53cb\u5427\uff01\ud83d\udd25",
+  "5 \u500b\u771f\u76f8\u5168\u5c0d\uff01\u4f60\u6839\u672c\u662f Evie \u7684\u5fc3\u9748\u5925\u4f34\uff01\ud83c\udfc6"
+];
+
+let shuffled = [], selected = new Set();
+let nickname = "", lastScore = 0, lastEntryId = null;
+
+const $ = id => document.getElementById(id);
+const shuffleArray = a => { const r = [...a]; for (let i = r.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [r[i], r[j]] = [r[j], r[i]]; } return r; };
+
+document.addEventListener('DOMContentLoaded', initGame);
+
+function initGame() {
+  shuffled = shuffleArray(OPTIONS);
+  selected.clear();
+  renderOptions();
+  updateCounter();
+}
+
+function showPage(id) {
+  ['page1','page2','page3'].forEach(p => {
+    $(p).classList.toggle('page-active', p === id);
+    $(p).classList.toggle('page-hidden', p !== id);
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toast(msg) {
+  const t = document.createElement('div');
+  t.className = 'fixed top-6 left-1/2 -translate-x-1/2 z-[60] bg-slate-900/90 text-white px-5 py-3 rounded-full text-xs sm:text-sm font-bold shadow-2xl flex items-center gap-2 transition-all duration-300';
+  const icon = document.createElement('i');
+  icon.className = 'not-italic'; icon.textContent = '\u2139\ufe0f';
+  t.append(icon, document.createTextNode(' ' + msg));
+  document.body.appendChild(t);
+  setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 300); }, 2200);
+}
+
+function handleNicknameSubmit() {
+  const input = $('userNickname');
+  const name = input.value.trim();
+  if (!name) { toast("\u8acb\u5148\u8f38\u5165\u66b1\u7a31\u624d\u80fd\u958b\u59cb\u6e2c\u8a66\u5594\uff01"); input.focus(); return; }
+  nickname = name;
+  $('confirmNameHolder').textContent = name;
+  toggleModal('confirmModal', 'confirmModalCard', true);
+}
+function closeConfirmModal() { toggleModal('confirmModal', 'confirmModalCard', false); }
+function proceedToGamePage() {
+  closeConfirmModal();
+  $('displayName').textContent = nickname;
+  showPage('page2');
+}
+function toggleModal(modalId, cardId, open) {
+  $(modalId).classList.toggle('opacity-0', !open);
+  $(modalId).classList.toggle('pointer-events-none', !open);
+  $(cardId).classList.toggle('scale-95', !open);
+  $(cardId).classList.toggle('scale-100', open);
+}
+
+const CHECK_OFF = "opt-check w-8 h-8 rounded-full border-2 border-slate-300 flex items-center justify-center text-xs font-black text-slate-400 shrink-0 group-hover:border-tealMain";
+const CHECK_ON = "opt-check w-8 h-8 rounded-full bg-tealMain border-2 border-tealMain flex items-center justify-center text-xs font-bold text-white shrink-0 shadow-sm";
+
+function renderOptions() {
+  const grid = $('optionsGrid');
+  grid.innerHTML = '';
+  shuffled.forEach((opt, i) => {
+    const card = document.createElement('div');
+    card.id = `opt-card-${i}`;
+    card.className = 'relative p-3.5 sm:p-4 rounded-2xl border border-slate-200 bg-white shadow-sm hover:shadow-md cursor-pointer transition-all duration-200 flex items-center gap-3 select-none overflow-hidden group';
+    card.onclick = () => toggleOption(i);
+    const check = document.createElement('div');
+    check.className = CHECK_OFF;
+    check.textContent = i + 1;
+    const p = document.createElement('p');
+    p.className = 'text-xs sm:text-sm font-bold text-slate-700 leading-snug flex-1';
+    p.textContent = opt.text;
+    const sp = document.createElement('div');
+    sp.className = 'sparkle-container';
+    card.append(check, p, sp);
+    grid.appendChild(card);
+  });
+}
+
+function toggleOption(i) {
+  const card = $(`opt-card-${i}`);
+  const check = card.querySelector('.opt-check');
+  const sp = card.querySelector('.sparkle-container');
+  if (selected.has(i)) {
+    selected.delete(i);
+    card.classList.remove('card-selected');
+    check.className = CHECK_OFF;
+    check.textContent = i + 1;
+    sp.innerHTML = '';
+  } else {
+    if (selected.size >= 5) { toast("\u6700\u591a\u53ea\u80fd\u9078\u64c7 5 \u500b\u9078\u9805\u5594\uff01"); return; }
+    selected.add(i);
+    card.classList.add('card-selected');
+    check.className = CHECK_ON;
+    check.textContent = '\u2714';
+    sparkles(sp);
+  }
+  updateCounter();
+}
+
+function sparkles(box) {
+  box.innerHTML = '';
+  [{top:'6%',left:'8%'},{top:'10%',right:'10%'},{bottom:'8%',left:'12%'},{bottom:'6%',right:'8%'}].forEach((pos, i) => {
+    const s = document.createElement('i');
+    s.className = 'sparkle-star text-xs not-italic'; s.textContent = '\u2b50';
+    Object.assign(s.style, { top: pos.top || 'auto', bottom: pos.bottom || 'auto', left: pos.left || 'auto', right: pos.right || 'auto', animationDelay: `${i * 0.2}s` });
+    box.appendChild(s);
+  });
+}
+
+function updateCounter() {
+  const n = selected.size, btn = $('submitAnswerBtn'), c = $('selectCounter');
+  c.textContent = `${n}/5`;
+  c.classList.toggle('text-amber-500', n === 5);
+  c.classList.toggle('text-tealMain', n !== 5);
+  const base = "w-full py-3.5 px-6 rounded-2xl font-bold text-base sm:text-lg transition-all duration-300 flex items-center justify-center gap-2 ";
+  btn.disabled = n !== 5;
+  btn.className = base + (n === 5 ? "bg-tealMain hover:bg-tealDark text-white shadow-lg cursor-pointer animate-pulse" : "bg-slate-200 text-slate-400 cursor-not-allowed");
+  btn.querySelector('span').textContent = n === 5 ? "\u9001\u51fa\u7b54\u6848 (\u5df2\u9078\u6eff 5 \u500b)" : `\u9001\u51fa\u7b54\u6848 (\u5df2\u9078\u53d6: ${n}/5)`;
+}
+
+async function submitAnswers() {
+  if (selected.size !== 5) { toast('\u8acb\u6b63\u597d\u9078\u6eff 5 \u500b\u771f\u76f8\u9078\u9805\u5f8c\u518d\u9001\u51fa\uff01'); return; }
+  $('submitAnswerBtn').disabled = true;
+  try {
+    const r = await api({ name: nickname, picks: [...selected].map(i => shuffled[i].id) });
+    lastScore = r.score; lastEntryId = r.id;
+    if (lastScore >= 3) confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+    $('scoreNumber').textContent = lastScore;
+    $('scoreComment').textContent = COMMENTS[lastScore];
+    toggleModal('resultModal', 'resultModalCard', true);
+  } catch (e) {
+    toast('\u9001\u51fa\u5931\u6557\uff0c\u8acb\u6aa2\u67e5\u7db2\u8def\u5f8c\u518d\u8a66\u4e00\u6b21');
+  }
+  updateCounter();
+}
+
+function goToLeaderboardPage() {
+  toggleModal('resultModal', 'resultModalCard', false);
+  renderLeaderboard();
+  showPage('page3');
+}
+function restartGameFromModal() { toggleModal('resultModal', 'resultModalCard', false); restartGame(); }
+
+// Paste your Google Apps Script web app URL (ends with /exec) here:
+const API_URL = "https://script.google.com/macros/s/AKfycbwhi8soVxCtU3_NrAIRWTE0T7CAMOlAto3Qvn7ZWq0mBwdNUqn-_v03AxLzcB_gSoW9/exec";
+
+async function api(payload) {
+  if (!/^https:\/\/script\.google\.com\//.test(API_URL)) throw new Error('API_URL not set');
+  const res = payload
+    ? await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) })
+    : await fetch(API_URL);
+  const data = await res.json();
+  if (data.error) throw new Error(data.error);
+  return data;
+}
+
+async function renderLeaderboard() {
+  const box = $('leaderboardList');
+  const msg = t => { box.innerHTML = ''; const p = document.createElement('p'); p.className = 'text-center text-slate-400 py-6 text-xs'; p.textContent = t; box.appendChild(p); };
+  msg('\u8f09\u5165\u4e2d...');
+  let d;
+  try { d = await api(); } catch (e) { msg('\u8f09\u5165\u5931\u6557\uff0c\u8acb\u7a0d\u5f8c\u518d\u8a66'); return; }
+  $('statTotalPlayers').textContent = `${d.total} \u4eba`;
+  $('statAvgScore').textContent = `${Number(d.avg).toFixed(1)} \u984c`;
+  if (!d.top.length) { msg('\u76ee\u524d\u5c1a\u7121\u6e2c\u8a66\u7d00\u9304'); return; }
+  box.innerHTML = '';
+  const medals = ['\ud83e\udd47 1', '\ud83e\udd48 2', '\ud83e\udd49 3'];
+  const rankColor = ['text-amber-500', 'text-slate-400', 'text-amber-700'];
+  const mk = (cls, txt) => { const s = document.createElement('span'); s.className = cls; s.textContent = txt; return s; };
+  d.top.forEach((item, idx) => {
+    const me = item.id === lastEntryId;
+    const row = document.createElement('div');
+    row.className = 'flex items-center justify-between py-2.5 px-3 hover:bg-white rounded-xl transition text-xs sm:text-sm';
+    const nameEl = mk('flex-1 text-left font-bold truncate ' + (me ? 'text-tealMain' : 'text-slate-700'), item.name);
+    if (me) nameEl.appendChild(mk('text-[10px] bg-tealLight text-tealDark px-1.5 py-0.5 rounded ml-1 font-normal', '\u4f60'));
+    row.append(
+      mk('w-12 font-bold ' + (rankColor[idx] || 'text-slate-400'), medals[idx] || '#' + (idx + 1)),
+      nameEl,
+      mk('w-16 text-center font-black text-tealMain font-fun', `${item.score} / 5`),
+      mk('w-16 text-right text-slate-400 text-[11px]', item.time)
+    );
+    box.appendChild(row);
+  });
+}
+
+async function shareScore() {
+  const text = `\u6211\u5728\u300c5 True 5 Line - \u6e2c\u8a66\u770b\u770b\u4f60\u5c0d Evie \u7684\u89c0\u5bdf\u300d\u7b54\u5c0d\u4e86 ${lastScore} / 5 \u500b\u771f\u76f8\uff01\u4f60\u4e5f\u4f86\u8a66\u8a66\u770b \ud83d\udc49 ${location.href}`;
+  try {
+    if (navigator.share) { await navigator.share({ text }); return; }
+    await navigator.clipboard.writeText(text);
+    toast("\u6210\u7e3e\u5df2\u8907\u88fd\u5230\u526a\u8cbc\u7c3f\uff01");
+  } catch (e) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch (err) {}
+    ta.remove();
+    toast(ok ? "\u6210\u7e3e\u5df2\u8907\u88fd\u5230\u526a\u8cbc\u7c3f\uff01" : "\u8907\u88fd\u5931\u6557\uff0c\u6b61\u8fce\u622a\u5716\u5206\u4eab\u4f60\u7684\u6210\u7e3e\uff01");
+  }
+}
+
+function restartGame() {
+  $('userNickname').value = '';
+  nickname = '';
+  initGame();
+  showPage('page1');
+}
+</script>
+</body>
+</html>
